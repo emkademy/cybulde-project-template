@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  app:
+    user: "${UID:-1000}"
+    hostname: "${HOST:-emkademy}"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        USER_NAME: "${USERNAME:-kyuksel}"
+        USER_ID: "${UID:-1000}"
+    image: emkademy-template
+    container_name: emkademy-template
+    volumes:
+      - ./:/app/
+      - ~/.config/gcloud/:${HOME}/.config/gcloud
+    ports:
+      - 8080:8080
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ipc: host
+    init: true
+
+
