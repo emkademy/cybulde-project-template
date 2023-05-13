@@ -3,6 +3,8 @@
 
 SHELL = /usr/bin/env bash
 USER_NAME = $(shell whoami)
+USER_ID = $(shell id -u)
+HOST_NAME = $(shell hostname)
 
 ifeq (, $(shell which docker-compose))
 	DOCKER_COMPOSE_COMMAND = docker compose
@@ -10,13 +12,22 @@ else
 	DOCKER_COMPOSE_COMMAND = docker-compose
 endif
 
+SERVICE_NAME = app
+CONTAINER_NAME = cybulde-template-container
+
 DIRS_TO_VALIDATE = cybulde
-DOCKER_COMPOSE_RUN = $(DOCKER_COMPOSE_COMMAND) run --rm app
-DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE_COMMAND) exec app
+DOCKER_COMPOSE_RUN = $(DOCKER_COMPOSE_COMMAND) run --rm $(SERVICE_NAME)
+DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE_COMMAND) exec $(SERVICE_NAME)
+
+export
 
 # Returns true if the stem is a non-empty environment variable, or else raises an error.
 guard-%:
 	@#$(or ${$*}, $(error $* is not set))
+
+## Call entrypoint
+entrypoint: up
+	$(DOCKER_COMPOSE_EXEC) python ./cybulde/entrypoint.py
 
 ## Starts jupyter lab
 notebook: up
@@ -59,12 +70,12 @@ full-check: lint check-type-annotations
 
 ## Builds docker image
 build:
-	$(DOCKER_COMPOSE_COMMAND) build app
+	$(DOCKER_COMPOSE_COMMAND) build $(SERVICE_NAME)
 
 ## Remove poetry.lock and build docker image
 build-for-dependencies:
 	rm -f *.lock
-	$(DOCKER_COMPOSE_COMMAND) build app
+	$(DOCKER_COMPOSE_COMMAND) build $(SERVICE_NAME)
 
 ## Lock dependencies with poetry
 lock-dependencies: build-for-dependencies
@@ -80,7 +91,7 @@ down:
 
 ## Open an interactive shell in docker container
 exec-in: up
-	docker exec -it emkademy-template bash
+	docker exec -it $(CONTAINER_NAME) bash
 
 .DEFAULT_GOAL := help
 

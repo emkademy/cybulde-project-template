@@ -1,0 +1,25 @@
+version: 1
+formatters:
+  brief:
+    format: '[%(levelname)s] %(asctime)s %(name)s: %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+handlers:
+  file:
+    level: INFO
+    class: logging.handlers.RotatingFileHandler
+    formatter: brief
+    maxBytes: 1024
+    backupCount: 0
+    filename: logs.log
+    mode: w
+    encoding: utf8
+  console:
+    level: DEBUG
+    class: logging.StreamHandler
+    formatter: brief
+    stream: ext://sys.stdout
+root:
+  level: INFO
+  handlers: [file, console]
+
+disable_existing_loggers: false

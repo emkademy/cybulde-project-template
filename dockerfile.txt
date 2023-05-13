@@ -1,7 +1,0 @@
-
-In this video, we are going to create a Dockerfile template that we are going to use throughout this course
-
-Of course, for different repositories we will need to modify this file a little, but the general structure will stay the same
-
-Alright, let's get started. First of all we are going to create a new directory called docker, and put a Dockerfile in it.
-

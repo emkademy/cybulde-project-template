@@ -2,16 +2,16 @@ version: "3.8"
 
 services:
   app:
-    user: "${UID:-1000}"
-    hostname: "${HOST:-emkademy}"
+    user: "${USER_ID:-1000}"
+    hostname: "${HOST_NAME:-emkademy}"
+    image: cybulde-template
+    container_name: cybulde-template-container
     build:
       context: .
       dockerfile: ./docker/Dockerfile
       args:
-        USER_NAME: "${USERNAME:-kyuksel}"
-        USER_ID: "${UID:-1000}"
-    image: emkademy-template
-    container_name: emkademy-template
+        USER_NAME: "${USER_NAME:-kyuksel}"
+        USER_ID: "${USER_ID:-1000}"
     volumes:
       - ./:/app/
       - ~/.config/gcloud/:${HOME}/.config/gcloud
