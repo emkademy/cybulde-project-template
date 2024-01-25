@@ -5,6 +5,7 @@ services:
     user: "${USER_ID:-1000}"
     hostname: "${HOST_NAME:-emkademy}"
     image: cybulde-template
+    platform: linux/amd64
     container_name: cybulde-template-container
     build:
       context: .
