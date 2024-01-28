@@ -28,7 +28,7 @@ RUN addgroup --system --gid ${USER_ID} ${USER_NAME} \
 RUN chown -R ${USER_NAME}:${USER_NAME} ${HOME}
 RUN mkdir -p /app && chown -R ${USER_NAME}:${USER_NAME} /app /tmp
 
-RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.4.2
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.7.1
 
 USER ${USER_NAME}
 
