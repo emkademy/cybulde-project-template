@@ -15,7 +15,7 @@ services:
         USER_ID: "${USER_ID:-1000}"
     volumes:
       - ./:/app/
-      - ~/.config/gcloud/:/home/${USER_NAME}/.config/gcloud
+      - ~/.config/gcloud/:/home/${USER_NAME:-kyuksel}/.config/gcloud
     ports:
       - 8080:8080
 
