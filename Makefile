@@ -66,7 +66,7 @@ test: up
 
 ## Perform a full check
 full-check: lint check-type-annotations
-	$(DOCKER_COMPOSE_EXEC) pytesta --cov --cov-report xml --verbose
+	$(DOCKER_COMPOSE_EXEC) pytest --cov --cov-report xml --verbose
 
 ## Builds docker image
 build:
